@@ -260,4 +260,15 @@
   .meses-grid.anual {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .meses-grid.semestral .mes-grid .dia.feriado,
+  .meses-grid.anual .mes-grid .dia.feriado {
+    background: #78350f;
+    color: #fbbf24;
+  }
+
+  .meses-grid.semestral .mes-grid .dia.feriado::after,
+  .meses-grid.anual .mes-grid .dia.feriado::after {
+    display: none;
+  }
 }

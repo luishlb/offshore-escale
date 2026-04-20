@@ -154,7 +154,7 @@ async function exportarPDF() {
     const elemento = document.querySelector('.cal-container');
     document.getElementById('cal-view').classList.add('pdf-export');
     const canvas = await html2canvas(elemento, {
-      scale: 1.5,
+      scale: Math.min(1.5, 1.5 / window.devicePixelRatio),
       backgroundColor: '#0f172a',
       logging: false,
       windowWidth: 1024,
