@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offshore Scale</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Offshore Scale</h1>
+      <p class="subtitle">Calcule sua escala de trabalho offshore</p>
+    </header>
+
+    <section class="form-section">
+      <div class="field">
+        <label for="escala">Escala de trabalho</label>
+        <select id="escala">
+          <option value="14x14">14x14</option>
+          <option value="14x21">14x21</option>
+          <option value="21x21">21x21</option>
+          <option value="28x28">28x28</option>
+          <option value="custom">Personalizada</option>
+        </select>
+      </div>
+
+      <div class="field custom-fields hidden" id="custom-fields">
+        <div>
+          <label for="dias-embarque">Dias embarcado</label>
+          <input type="number" id="dias-embarque" min="1" max="365" placeholder="Ex: 14" />
+        </div>
+        <div>
+          <label for="dias-desembarque">Dias desembarcado</label>
+          <input type="number" id="dias-desembarque" min="1" max="365" placeholder="Ex: 21" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="data-inicio">Data do primeiro embarque</label>
+        <input type="date" id="data-inicio" />
+      </div>
+
+      <button id="btn-calcular" onclick="calcular()">Calcular</button>
+    </section>
+
+    <section class="resultado hidden" id="resultado">
+      <div class="status-card" id="status-card">
+        <span class="status-label">Status hoje</span>
+        <span class="status-value" id="status-hoje"></span>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-label">Próximo embarque</span>
+          <span class="info-date" id="proximo-embarque"></span>
+          <span class="info-dias" id="dias-para-embarque"></span>
+        </div>
+        <div class="info-card">
+          <span class="info-label">Próximo desembarque</span>
+          <span class="info-date" id="proximo-desembarque"></span>
+          <span class="info-dias" id="dias-para-desembarque"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
