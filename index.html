@@ -8,6 +8,35 @@
 </head>
 <body>
 
+  <!-- Modal de consulta por data -->
+  <div class="modal-overlay hidden" id="modal-consulta">
+    <div class="modal modal-consulta">
+      <h2>Consultar data específica</h2>
+      <p>Veja o status de todos os perfis em uma data.</p>
+      <div class="cal-wrapper">
+        <input type="text" id="data-consulta-display" class="cal-input" placeholder="Selecione uma data" readonly />
+        <input type="hidden" id="data-consulta" />
+        <div class="cal-dropdown hidden" id="cal-consulta-dropdown">
+          <div class="cal-header">
+            <button type="button" id="cal-consulta-prev">&#8249;</button>
+            <span id="cal-consulta-titulo"></span>
+            <button type="button" id="cal-consulta-next">&#8250;</button>
+          </div>
+          <div class="cal-dias-semana">
+            <span>Dom</span><span>Seg</span><span>Ter</span>
+            <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+          </div>
+          <div class="cal-grid" id="cal-consulta-grid"></div>
+        </div>
+      </div>
+      <div id="resultado-consulta"></div>
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="fecharModalConsulta()">Fechar</button>
+        <button class="modal-btn-salvar" onclick="consultarData()">Consultar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de perfil -->
   <div class="modal-overlay hidden" id="modal-perfil">
     <div class="modal">
@@ -72,6 +101,8 @@
       <button id="btn-novo-perfil" class="btn-perfil hidden" onclick="abrirModalPerfil()">Salvar outro perfil</button>
     </section>
 
+    <button class="btn-consulta hidden" id="btn-consulta" onclick="abrirModalConsulta()">Consultar data específica</button>
+
     <section class="resultado hidden" id="resultado">
       <div class="status-card" id="status-card">
         <span class="status-label">Status hoje</span>
@@ -100,9 +131,9 @@
         </div>
       </div>
     </section>
-  </div>
 
-  <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
+    <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
+  </div>
 
   <script src="calculos.js"></script>
   <script src="app.js"></script>

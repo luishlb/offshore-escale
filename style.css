@@ -402,6 +402,92 @@ header .subtitle {
   border-color: #38bdf8;
 }
 
+.btn-consulta {
+  width: 100%;
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  margin-top: 16px;
+}
+
+.btn-consulta:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+.modal-consulta {
+  max-width: 440px;
+}
+
+.modal-consulta input[type="date"] {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 1rem;
+  padding: 10px 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.modal-consulta input[type="date"]:focus {
+  border-color: #38bdf8;
+}
+
+.consulta-resultado {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.consulta-grupo {
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consulta-grupo.embarcados {
+  background: #164e63;
+  border: 1px solid #0e7490;
+}
+
+.consulta-grupo.desembarcados {
+  background: #14532d;
+  border: 1px solid #15803d;
+}
+
+.consulta-grupo-titulo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.consulta-grupo.embarcados .consulta-grupo-titulo { color: #38bdf8; }
+.consulta-grupo.desembarcados .consulta-grupo-titulo { color: #4ade80; }
+
+.consulta-nome {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.consulta-vazio {
+  font-size: 0.8rem;
+  color: #475569;
+  font-style: italic;
+}
+
 .copyright {
   text-align: center;
   color: #475569;
