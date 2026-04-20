@@ -192,6 +192,16 @@
 .meses-grid.mensal .mes-grid .dia    { font-size: 1.3rem; }
 .meses-grid.semestral .mes-grid .dia { font-size: 1rem; }
 
+/* Feriados no PDF: fundo sólido em vez de ponto (pseudo-elementos não são confiáveis no html2canvas) */
+.pdf-export .mes-grid .dia.feriado {
+  background: #78350f;
+  color: #fbbf24;
+}
+
+.pdf-export .mes-grid .dia.feriado::after {
+  display: none;
+}
+
 /* Tamanhos exclusivos para captura de PDF */
 .pdf-export .meses-grid.mensal .mes-grid .dia,
 .pdf-export .meses-grid.mensal .mes-grid .dia.dia-embarque,
