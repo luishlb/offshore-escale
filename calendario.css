@@ -67,7 +67,8 @@
 /* Legenda */
 .legenda {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 24px;
 }
 

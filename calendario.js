@@ -139,6 +139,13 @@ async function exportarPDF() {
   const botoesNav = document.querySelectorAll('.cal-nav button');
   botoesNav.forEach(b => b.style.visibility = 'hidden');
 
+  // Força grid de 3 colunas no anual (garante layout consistente no PDF em mobile)
+  const mesGrid = document.querySelector('.meses-grid');
+  const gridOriginal = mesGrid ? mesGrid.style.gridTemplateColumns : null;
+  if (mesGrid && viewAtual === 'anual') {
+    mesGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+  }
+
   try {
     const elemento = document.getElementById('cal-view');
     const canvas = await html2canvas(elemento, {
@@ -173,6 +180,7 @@ async function exportarPDF() {
     pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
 
   } finally {
+    if (mesGrid && gridOriginal !== null) mesGrid.style.gridTemplateColumns = gridOriginal;
     botoesNav.forEach(b => b.style.visibility = '');
     btn.textContent = '⬇ Exportar PDF';
     btn.disabled = false;
