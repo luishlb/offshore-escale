@@ -73,7 +73,7 @@ document.getElementById('cal-next').addEventListener('click', () => {
 document.getElementById('data-inicio-display').addEventListener('click', abrirCalendario);
 
 document.addEventListener('click', (e) => {
-  const wrapper = document.querySelector('.cal-wrapper');
+  const wrapper = document.getElementById('cal-dropdown').closest('.cal-wrapper');
   if (!wrapper.contains(e.target)) {
     document.getElementById('cal-dropdown').classList.add('hidden');
   }
