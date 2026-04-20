@@ -151,6 +151,7 @@ header .subtitle {
 
 .perfis-dropdown-row select {
   flex: 1;
+  min-width: 0;
   background: #0f172a;
   border: 1px solid #38bdf8;
   border-radius: 8px;
