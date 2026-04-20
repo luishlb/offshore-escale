@@ -139,11 +139,14 @@ async function exportarPDF() {
   const botoesNav = document.querySelectorAll('.cal-nav button');
   botoesNav.forEach(b => b.style.visibility = 'hidden');
 
-  // Força grid de 3 colunas no anual (garante layout consistente no PDF em mobile)
+  // Força grid de 3 colunas no anual e expande container (garante layout completo no PDF em mobile)
   const mesGrid = document.querySelector('.meses-grid');
   const gridOriginal = mesGrid ? mesGrid.style.gridTemplateColumns : null;
+  const calContainer = document.querySelector('.cal-container');
+  const containerWidthOriginal = calContainer ? calContainer.style.width : null;
   if (mesGrid && viewAtual === 'anual') {
     mesGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    if (calContainer) calContainer.style.width = '900px';
   }
 
   try {
@@ -181,6 +184,7 @@ async function exportarPDF() {
 
   } finally {
     if (mesGrid && gridOriginal !== null) mesGrid.style.gridTemplateColumns = gridOriginal;
+    if (calContainer && containerWidthOriginal !== null) calContainer.style.width = containerWidthOriginal;
     botoesNav.forEach(b => b.style.visibility = '');
     btn.textContent = '⬇ Exportar PDF';
     btn.disabled = false;

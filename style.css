@@ -407,11 +407,6 @@ header .subtitle {
   display: none !important;
 }
 
-@media (max-width: 400px) {
-  .custom-fields label {
-    font-size: 0.72rem;
-  }
-}
 
 /* Calendário customizado */
 .cal-wrapper {
