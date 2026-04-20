@@ -402,6 +402,14 @@ header .subtitle {
   border-color: #38bdf8;
 }
 
+.copyright {
+  text-align: center;
+  color: #475569;
+  font-size: 0.75rem;
+  margin-top: 32px;
+  padding-bottom: 8px;
+}
+
 /* Utilitário */
 .hidden {
   display: none !important;
