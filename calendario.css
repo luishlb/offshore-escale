@@ -84,7 +84,7 @@
 .embarque-legenda     { background: #991b1b; color: #fee2e2; border-radius: 6px; }
 .desembarque-legenda  { background: #15803d; color: #fff; border-radius: 6px; }
 .hoje-legenda         { background: #1e293b; color: #e2e8f0; border: 1px solid #38bdf8; }
-.feriado-legenda      { background: #1e293b; color: #fbbf24; border: 1px solid #fbbf24; }
+.feriado-legenda      { background: #1e293b; color: #facc15; border: 1px solid #facc15; }
 
 /* Navegação de período (ano/semestre) */
 .cal-nav {
@@ -194,8 +194,8 @@
 
 /* Feriados no PDF: fundo sólido em vez de ponto (pseudo-elementos não são confiáveis no html2canvas) */
 .pdf-export .mes-grid .dia.feriado {
-  background: #78350f;
-  color: #fbbf24;
+  background: #854d0e;
+  color: #fef08a;
 }
 
 .pdf-export .mes-grid .dia.feriado::after {
@@ -228,12 +228,13 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #fbbf24;
+  background: #facc15;
 }
 
 .meses-grid.mensal .mes-grid .dia.feriado::after {
   width: 13px;
   height: 13px;
+  background: #facc15;
 }
 
 .mes-grid .dia.dia-embarque {
@@ -273,8 +274,8 @@
 
   .meses-grid.semestral .mes-grid .dia.feriado,
   .meses-grid.anual .mes-grid .dia.feriado {
-    background: #78350f;
-    color: #fbbf24;
+    background: #854d0e;
+    color: #fef08a;
   }
 
   .meses-grid.semestral .mes-grid .dia.feriado::after,
