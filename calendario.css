@@ -188,8 +188,8 @@
   font-weight: 500;
 }
 
-.meses-grid.mensal .mes-grid .dia    { font-size: 1.1rem; }
-.meses-grid.semestral .mes-grid .dia { font-size: 0.85rem; }
+.meses-grid.mensal .mes-grid .dia    { font-size: 1.3rem; }
+.meses-grid.semestral .mes-grid .dia { font-size: 1rem; }
 
 .mes-grid .dia.embarcado    { background: #7f1d1d; color: #fca5a5; }
 .mes-grid .dia.desembarcado { background: #14532d; color: #86efac; }
@@ -213,9 +213,9 @@
 }
 
 .meses-grid.mensal .mes-grid .dia.dia-embarque,
-.meses-grid.mensal .mes-grid .dia.dia-desembarque    { font-size: 1.1rem; }
+.meses-grid.mensal .mes-grid .dia.dia-desembarque    { font-size: 1.3rem; }
 .meses-grid.semestral .mes-grid .dia.dia-embarque,
-.meses-grid.semestral .mes-grid .dia.dia-desembarque { font-size: 0.85rem; }
+.meses-grid.semestral .mes-grid .dia.dia-desembarque { font-size: 1rem; }
 
 .btn-grupo button.ativo {
   background: #0c4a6e;
