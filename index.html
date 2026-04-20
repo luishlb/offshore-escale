@@ -37,6 +37,18 @@
     </div>
   </div>
 
+  <!-- Modal de confirmação de perfil -->
+  <div class="modal-overlay hidden" id="modal-confirmar-perfil">
+    <div class="modal">
+      <h2>Salvar perfil?</h2>
+      <p>Deseja cadastrar um perfil antes de consultar? Assim você não precisa preencher tudo de novo depois.</p>
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="responderSalvarPerfil(false)">Não, continuar</button>
+        <button class="modal-btn-salvar" onclick="responderSalvarPerfil(true)">Sim</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de perfil -->
   <div class="modal-overlay hidden" id="modal-perfil">
     <div class="modal">
@@ -136,6 +148,10 @@
   </div>
 
   <script src="calculos.js"></script>
-  <script src="app.js"></script>
+  <script src="cal-embarque.js"></script>
+  <script src="cal-consulta.js"></script>
+  <script src="calculo.js"></script>
+  <script src="perfis.js"></script>
+  <script src="consulta.js"></script>
 </body>
 </html>
