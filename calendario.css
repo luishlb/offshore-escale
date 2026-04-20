@@ -84,6 +84,7 @@
 .embarque-legenda     { background: #991b1b; color: #fee2e2; border-radius: 6px; }
 .desembarque-legenda  { background: #15803d; color: #fff; border-radius: 6px; }
 .hoje-legenda         { background: #1e293b; color: #e2e8f0; border: 1px solid #38bdf8; }
+.feriado-legenda      { background: #1e293b; color: #fbbf24; border: 1px solid #fbbf24; }
 
 /* Navegação de período (ano/semestre) */
 .cal-nav {
@@ -203,6 +204,27 @@
 .mes-grid .dia.desembarcado { background: #14532d; color: #86efac; }
 .mes-grid .dia.hoje         { outline: 2px solid #38bdf8; outline-offset: -2px; font-weight: 800; }
 .mes-grid .dia.vazio        { background: transparent; }
+
+.mes-grid .dia.feriado {
+  position: relative;
+  cursor: pointer;
+}
+
+.mes-grid .dia.feriado::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fbbf24;
+}
+
+.meses-grid.mensal .mes-grid .dia.feriado::after {
+  width: 13px;
+  height: 13px;
+}
 
 .mes-grid .dia.dia-embarque {
   background: #dc2626;

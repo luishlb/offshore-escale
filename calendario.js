@@ -58,7 +58,11 @@ function renderMes(ano, mes, tamanho) {
       else if (resultado.diaDoCiclo === diasEmbarcado) transicao = 'dia-desembarque';
     }
 
-    html += `<div class="dia ${status} ${transicao} ${isHoje}">${d}</div>`;
+    const feriado = obterFeriado(ano, mes, d);
+    const classFeriado = feriado ? 'feriado' : '';
+    const onclickFeriado = feriado ? `onclick="mostrarFeriado('${feriado.nome}')"` : '';
+
+    html += `<div class="dia ${status} ${transicao} ${isHoje} ${classFeriado}" ${onclickFeriado}>${d}</div>`;
   }
 
   html += `</div></div>`;
@@ -150,7 +154,7 @@ async function exportarPDF() {
     const elemento = document.querySelector('.cal-container');
     document.getElementById('cal-view').classList.add('pdf-export');
     const canvas = await html2canvas(elemento, {
-      scale: 2,
+      scale: 1.5,
       backgroundColor: '#0f172a',
       logging: false,
       windowWidth: 1024,
@@ -171,7 +175,7 @@ async function exportarPDF() {
     const imgH = canvas.height * ratio;
 
     pdf.addImage(
-      canvas.toDataURL('image/png'), 'PNG',
+      canvas.toDataURL('image/jpeg', 0.85), 'JPEG',
       (pageW - imgW) / 2,
       (pageH - imgH) / 2,
       imgW, imgH
@@ -189,6 +193,15 @@ async function exportarPDF() {
     btn.disabled = false;
   }
 }
+
+function mostrarFeriado(nome) {
+  document.getElementById('modal-feriado-nome').textContent = nome;
+  document.getElementById('modal-feriado').classList.remove('hidden');
+}
+
+document.getElementById('modal-feriado').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
+});
 
 // Inicializa ao carregar
 trocarView(viewAtual);

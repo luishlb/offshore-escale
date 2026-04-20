@@ -1,5 +1,32 @@
 // Funções de cálculo compartilhadas entre app.js e calendario.js
 
+const FERIADOS_FIXOS = {
+  '1-1':   'Ano Novo',
+  '4-21':  'Tiradentes',
+  '5-1':   'Dia do Trabalho',
+  '9-7':   'Independência do Brasil',
+  '10-12': 'Nossa Senhora Aparecida',
+  '11-2':  'Finados',
+  '11-15': 'Proclamação da República',
+  '11-20': 'Consciência Negra',
+  '12-25': 'Natal',
+};
+
+function obterFeriado(ano, mes, dia) {
+  const fixo = FERIADOS_FIXOS[`${mes + 1}-${dia}`];
+  if (fixo) return { nome: fixo, tipo: 'feriado' };
+
+  // 2ª sexta-feira de agosto = Dia do Trabalhador Offshore
+  if (mes === 7) {
+    const primeiroDia = new Date(ano, 7, 1).getDay();
+    const diasAtePrimeiraSexta = (5 - primeiroDia + 7) % 7;
+    const segundaSexta = 1 + diasAtePrimeiraSexta + 7;
+    if (dia === segundaSexta) return { nome: 'Dia do Trabalhador Offshore', tipo: 'feriado' };
+  }
+
+  return null;
+}
+
 function diferencaDias(dataA, dataB) {
   const msPerDay = 1000 * 60 * 60 * 24;
   const a = Date.UTC(dataA.getFullYear(), dataA.getMonth(), dataA.getDate());

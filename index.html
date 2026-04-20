@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Offshore Scale</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
 </head>
 <body>
 
@@ -147,6 +149,11 @@
     <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
   </div>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
   <script src="calculos.js"></script>
   <script src="cal-embarque.js"></script>
   <script src="cal-consulta.js"></script>

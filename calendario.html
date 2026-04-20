@@ -6,8 +6,20 @@
   <title>Calendário — Offshore Scale</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="calendario.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
 </head>
 <body>
+
+  <div class="modal-overlay hidden" id="modal-feriado">
+    <div class="modal">
+      <h2>Feriado</h2>
+      <p id="modal-feriado-nome"></p>
+      <div class="modal-acoes">
+        <button class="modal-btn-salvar" onclick="document.getElementById('modal-feriado').classList.add('hidden')">OK</button>
+      </div>
+    </div>
+  </div>
 
   <div class="container cal-container">
     <header class="cal-page-header">
@@ -32,6 +44,7 @@
       <span class="legenda-item embarque-legenda">Dia de embarque</span>
       <span class="legenda-item desembarque-legenda">Dia de desembarque</span>
       <span class="legenda-item hoje-legenda">Hoje</span>
+      <span class="legenda-item feriado-legenda">Feriado</span>
     </div>
 
     <div id="cal-view"></div>
