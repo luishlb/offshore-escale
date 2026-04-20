@@ -11,9 +11,22 @@
   margin-bottom: 20px;
 }
 
+.cal-titulo-bloco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
 .cal-page-header h1 {
   font-size: 1.5rem;
   color: #38bdf8;
+}
+
+.cal-subtitulo {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 600;
 }
 
 .btn-voltar {
@@ -26,6 +39,29 @@
 
 .btn-voltar:hover {
   color: #e2e8f0;
+}
+
+.header-acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-exportar {
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-exportar:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
 }
 
 /* Legenda */
@@ -64,6 +100,13 @@
   letter-spacing: 0.05em;
   min-width: 220px;
   text-align: center;
+}
+
+.cal-nav-nome {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0;
 }
 
 .cal-nav button {
@@ -172,6 +215,7 @@
   color: #38bdf8;
   border-color: #38bdf8;
 }
+
 
 /* Responsivo para semestral/anual em telas menores */
 @media (max-width: 600px) {

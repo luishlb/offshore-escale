@@ -118,6 +118,146 @@ header .subtitle {
   background: #7dd3fc;
 }
 
+.btn-perfil {
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-perfil:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+/* Seção de perfis salvos */
+.perfis-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.perfis-dropdown-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.perfis-dropdown-row select {
+  flex: 1;
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 1rem;
+  padding: 10px 14px;
+  outline: none;
+}
+
+.btn-apagar-perfil {
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #f87171;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-apagar-perfil:hover {
+  border-color: #f87171;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.modal p {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.modal input {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 1rem;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.modal input:focus { border-color: #38bdf8; }
+
+.modal-acoes {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.modal-btn-cancelar {
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-btn-cancelar:hover { color: #e2e8f0; }
+
+.modal-btn-salvar {
+  background: #38bdf8;
+  border: none;
+  border-radius: 8px;
+  color: #0f172a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-btn-salvar:hover { background: #7dd3fc; }
+
 #btn-calcular:active {
   transform: scale(0.98);
 }

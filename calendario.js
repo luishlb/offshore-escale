@@ -8,6 +8,13 @@ const diasEmbarcado   = parseInt(params.get('embarcado'));
 const diasDesembarcado = parseInt(params.get('desembarcado'));
 let viewAtual = params.get('view') || 'mensal';
 let periodoOffset = 0;
+const nomeParam = params.get('nome');
+
+if (nomeParam) {
+  const subtitulo = document.getElementById('cal-subtitulo');
+  subtitulo.textContent = nomeParam;
+  subtitulo.classList.remove('hidden');
+}
 
 if (!dataEmbarqueStr || !diasEmbarcado || !diasDesembarcado) {
   document.getElementById('cal-view').innerHTML =
@@ -64,7 +71,12 @@ function calcularPeriodo(view) {
   const anoAtual = hoje.getFullYear();
   const mesAtual = hoje.getMonth();
 
-  if (view === 'semestral') {
+  if (view === 'mensal') {
+    const absTarget = (anoAtual * 12 + mesAtual) + periodoOffset;
+    const ano = Math.floor(absTarget / 12);
+    const mes = absTarget % 12;
+    return { ano, mesInicio: mes, titulo: `${MESES_NOMES[mes]} ${ano}` };
+  } else if (view === 'semestral') {
     const halfBase = mesAtual < 6 ? 0 : 1;
     const absTarget = (anoAtual * 2 + halfBase) + periodoOffset;
     const ano = Math.floor(absTarget / 2);
@@ -79,36 +91,19 @@ function calcularPeriodo(view) {
 
 // Monta a view completa com meses fixos por tipo de visualização
 function renderView(view) {
-  const hoje = new Date();
-  let mesInicio, mesesCount, colunas, anoView;
+  const mesesCount = view === 'mensal' ? 1 : view === 'semestral' ? 6 : 12;
+  const periodo = calcularPeriodo(view);
 
-  if (view === 'mensal') {
-    mesInicio  = hoje.getMonth();
-    mesesCount = 1;
-    colunas    = 'mensal';
-    anoView    = hoje.getFullYear();
-  } else {
-    const periodo = calcularPeriodo(view);
-    mesInicio  = periodo.mesInicio;
-    anoView    = periodo.ano;
-    mesesCount = view === 'semestral' ? 6 : 12;
-    colunas    = view;
-  }
+  const nomeHtml = nomeParam ? `<span class="cal-nav-nome">• ${nomeParam}</span>` : '';
+  let html = `<div class="cal-nav">
+    <button onclick="navegarPeriodo(-1)">&#8249;</button>
+    <span>${periodo.titulo} ${nomeHtml}</span>
+    <button onclick="navegarPeriodo(1)">&#8250;</button>
+  </div>`;
 
-  let html = '';
-
-  if (view !== 'mensal') {
-    const periodo = calcularPeriodo(view);
-    html += `<div class="cal-nav">
-      <button onclick="navegarPeriodo(-1)">&#8249;</button>
-      <span>${periodo.titulo}</span>
-      <button onclick="navegarPeriodo(1)">&#8250;</button>
-    </div>`;
-  }
-
-  html += `<div class="meses-grid ${colunas}">`;
+  html += `<div class="meses-grid ${view}">`;
   for (let i = 0; i < mesesCount; i++) {
-    html += renderMes(anoView, mesInicio + i, view);
+    html += renderMes(periodo.ano, periodo.mesInicio + i, view);
   }
   html += `</div>`;
 
@@ -133,6 +128,55 @@ function trocarView(view) {
   history.replaceState(null, '', `?${novosParams.toString()}`);
 
   renderView(view);
+}
+
+async function exportarPDF() {
+  const btn = document.querySelector('.btn-exportar');
+  btn.textContent = 'Gerando...';
+  btn.disabled = true;
+
+  // Esconde as setas de navegação para ficarem fora do PDF
+  const botoesNav = document.querySelectorAll('.cal-nav button');
+  botoesNav.forEach(b => b.style.visibility = 'hidden');
+
+  try {
+    const elemento = document.getElementById('cal-view');
+    const canvas = await html2canvas(elemento, {
+      scale: 2,
+      backgroundColor: '#0f172a',
+      logging: false,
+    });
+
+    const { jsPDF } = window.jspdf;
+    const isLandscape = canvas.width > canvas.height;
+    const pdf = new jsPDF({
+      orientation: isLandscape ? 'l' : 'p',
+      unit: 'mm',
+      format: 'a4',
+    });
+
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
+    const imgW = canvas.width * ratio;
+    const imgH = canvas.height * ratio;
+
+    pdf.addImage(
+      canvas.toDataURL('image/png'), 'PNG',
+      (pageW - imgW) / 2,
+      (pageH - imgH) / 2,
+      imgW, imgH
+    );
+
+    const periodo = calcularPeriodo(viewAtual);
+    const prefixo = nomeParam ? `${nomeParam} - ` : '';
+    pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
+
+  } finally {
+    botoesNav.forEach(b => b.style.visibility = '');
+    btn.textContent = '⬇ Exportar PDF';
+    btn.disabled = false;
+  }
 }
 
 // Inicializa ao carregar

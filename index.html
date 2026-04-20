@@ -8,11 +8,32 @@
 </head>
 <body>
 
+  <!-- Modal de perfil -->
+  <div class="modal-overlay hidden" id="modal-perfil">
+    <div class="modal">
+      <h2>Salvar perfil</h2>
+      <p>Informe seu nome para salvar a escala atual.</p>
+      <input type="text" id="input-nome" placeholder="Seu nome" maxlength="40" />
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="fecharModalPerfil()">Cancelar</button>
+        <button class="modal-btn-salvar" onclick="confirmarSalvarPerfil()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <header>
       <h1>Offshore Scale</h1>
       <p class="subtitle">Calcule sua escala de trabalho offshore</p>
     </header>
+
+    <div class="perfis-section hidden" id="perfis-section">
+      <span class="ver-label">Perfil ativo</span>
+      <div class="perfis-dropdown-row">
+        <select id="perfis-select" onchange="selecionarPerfilDropdown()"></select>
+        <button class="btn-apagar-perfil" onclick="deletarPerfilAtivo()">Apagar</button>
+      </div>
+    </div>
 
     <section class="form-section">
       <div class="field custom-fields" id="custom-fields">
@@ -47,6 +68,8 @@
       </div>
 
       <button id="btn-calcular" onclick="calcular()">Calcular</button>
+      <button id="btn-salvar-perfil" class="btn-perfil" onclick="clicarSalvarPerfil()">Salvar perfil</button>
+      <button id="btn-novo-perfil" class="btn-perfil hidden" onclick="abrirModalPerfil()">Salvar outro perfil</button>
     </section>
 
     <section class="resultado hidden" id="resultado">
