@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendário — Offshore Scale</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="calendario.css" />
+</head>
+<body>
+
+  <div class="container cal-container">
+    <header class="cal-page-header">
+      <a href="index.html" class="btn-voltar">&#8592; Voltar</a>
+      <h1>Offshore Scale</h1>
+      <div class="btn-grupo">
+        <button id="btn-mensal"    onclick="trocarView('mensal')">Mensal</button>
+        <button id="btn-semestral" onclick="trocarView('semestral')">Semestral</button>
+        <button id="btn-anual"     onclick="trocarView('anual')">Anual</button>
+      </div>
+    </header>
+
+    <div class="legenda">
+      <span class="legenda-item embarcado-legenda">Embarcado</span>
+      <span class="legenda-item desembarcado-legenda">Desembarcado</span>
+      <span class="legenda-item hoje-legenda">Hoje</span>
+    </div>
+
+    <div id="cal-view"></div>
+  </div>
+
+  <script src="calculos.js"></script>
+  <script src="calendario.js"></script>
+</body>
+</html>

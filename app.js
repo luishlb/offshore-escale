@@ -1,25 +1,87 @@
-// Mostra/oculta campos de escala personalizada
-document.getElementById('escala').addEventListener('change', function () {
-  const customFields = document.getElementById('custom-fields');
-  if (this.value === 'custom') {
-    customFields.classList.remove('hidden');
-  } else {
-    customFields.classList.add('hidden');
+// ── Calendário customizado ──────────────────────────────────────
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+               'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+let calAno = new Date().getFullYear();
+let calMes = new Date().getMonth();
+let calDataSelecionada = null;
+
+function abrirCalendario() {
+  const dropdown = document.getElementById('cal-dropdown');
+  dropdown.classList.toggle('hidden');
+  if (!dropdown.classList.contains('hidden')) renderCalendario();
+}
+
+function renderCalendario() {
+  document.getElementById('cal-titulo').textContent = `${MESES[calMes]} ${calAno}`;
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  const hoje = new Date();
+  const primeiroDia = new Date(calAno, calMes, 1).getDay();
+  const totalDias = new Date(calAno, calMes + 1, 0).getDate();
+
+  for (let i = 0; i < primeiroDia; i++) {
+    const vazio = document.createElement('button');
+    vazio.classList.add('vazio');
+    grid.appendChild(vazio);
   }
+
+  for (let d = 1; d <= totalDias; d++) {
+    const btn = document.createElement('button');
+    btn.textContent = d;
+
+    const eHoje = d === hoje.getDate() && calMes === hoje.getMonth() && calAno === hoje.getFullYear();
+    if (eHoje) btn.classList.add('hoje');
+
+    if (calDataSelecionada &&
+        d === calDataSelecionada.getDate() &&
+        calMes === calDataSelecionada.getMonth() &&
+        calAno === calDataSelecionada.getFullYear()) {
+      btn.classList.add('selecionado');
+    }
+
+    btn.addEventListener('click', () => selecionarDia(d));
+    grid.appendChild(btn);
+  }
+}
+
+function selecionarDia(dia) {
+  calDataSelecionada = new Date(calAno, calMes, dia);
+
+  const dd = String(dia).padStart(2, '0');
+  const mm = String(calMes + 1).padStart(2, '0');
+  document.getElementById('data-inicio-display').value = `${dd}/${mm}/${calAno}`;
+  document.getElementById('data-inicio').value = `${calAno}-${mm}-${dd}`;
+
+  document.getElementById('cal-dropdown').classList.add('hidden');
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  calMes--;
+  if (calMes < 0) { calMes = 11; calAno--; }
+  renderCalendario();
 });
 
-// Retorna { diasEmbarcado, diasDesembarcado } com base na seleção
-function obterEscala() {
-  const select = document.getElementById('escala').value;
+document.getElementById('cal-next').addEventListener('click', () => {
+  calMes++;
+  if (calMes > 11) { calMes = 0; calAno++; }
+  renderCalendario();
+});
 
-  if (select !== 'custom') {
-    const partes = select.split('x');
-    return {
-      diasEmbarcado: parseInt(partes[0]),
-      diasDesembarcado: parseInt(partes[1]),
-    };
+document.getElementById('data-inicio-display').addEventListener('click', abrirCalendario);
+
+document.addEventListener('click', (e) => {
+  const wrapper = document.querySelector('.cal-wrapper');
+  if (!wrapper.contains(e.target)) {
+    document.getElementById('cal-dropdown').classList.add('hidden');
   }
+});
+// ────────────────────────────────────────────────────────────────
 
+// Retorna { diasEmbarcado, diasDesembarcado } com base nos inputs
+function obterEscala() {
   const embarcado = parseInt(document.getElementById('dias-embarque').value);
   const desembarcado = parseInt(document.getElementById('dias-desembarque').value);
 
@@ -39,84 +101,6 @@ function formatarData(date) {
   });
 }
 
-// Retorna a diferença em dias inteiros entre duas datas (sem horário)
-function diferencaDias(dataA, dataB) {
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const a = Date.UTC(dataA.getFullYear(), dataA.getMonth(), dataA.getDate());
-  const b = Date.UTC(dataB.getFullYear(), dataB.getMonth(), dataB.getDate());
-  return Math.round((b - a) / msPerDay);
-}
-
-// Dado o dia do ciclo (0-based) e a escala, diz se está embarcado
-function estaEmbarcadoNoDia(diaDoCiclo, diasEmbarcado) {
-  return diaDoCiclo < diasEmbarcado;
-}
-
-// Calcula o status para uma data alvo a partir de uma data de embarque inicial
-function calcularStatus(dataEmbarqueInicial, diasEmbarcado, diasDesembarcado, dataAlvo) {
-  const ciclo = diasEmbarcado + diasDesembarcado;
-  const totalDias = diferencaDias(dataEmbarqueInicial, dataAlvo);
-
-  // Se a data alvo é antes do embarque inicial, não há dados
-  if (totalDias < 0) return null;
-
-  const diaDoCiclo = totalDias % ciclo;
-  const embarcado = estaEmbarcadoNoDia(diaDoCiclo, diasEmbarcado);
-
-  return { embarcado, diaDoCiclo };
-}
-
-// Encontra a próxima data de embarque a partir de hoje (exclusivo se já estiver embarcado hoje)
-function proximoEmbarque(dataEmbarqueInicial, diasEmbarcado, diasDesembarcado, hoje) {
-  const ciclo = diasEmbarcado + diasDesembarcado;
-  const totalDias = diferencaDias(dataEmbarqueInicial, hoje);
-
-  if (totalDias < 0) return dataEmbarqueInicial;
-
-  const diaDoCiclo = totalDias % ciclo;
-
-  // Quantos dias até o início do próximo ciclo (início = embarque)
-  let diasAteProximoEmbarque;
-  if (diaDoCiclo < diasEmbarcado) {
-    // Está embarcado agora: próximo embarque é no próximo ciclo
-    diasAteProximoEmbarque = ciclo - diaDoCiclo;
-  } else {
-    // Está desembarcado: próximo embarque é no começo do próximo ciclo
-    diasAteProximoEmbarque = ciclo - diaDoCiclo;
-  }
-
-  const proxEmbarque = new Date(hoje);
-  proxEmbarque.setDate(proxEmbarque.getDate() + diasAteProximoEmbarque);
-  return proxEmbarque;
-}
-
-// Encontra a próxima data de desembarque a partir de hoje
-function proximoDesembarque(dataEmbarqueInicial, diasEmbarcado, diasDesembarcado, hoje) {
-  const ciclo = diasEmbarcado + diasDesembarcado;
-  const totalDias = diferencaDias(dataEmbarqueInicial, hoje);
-
-  if (totalDias < 0) {
-    // Antes do ciclo começar: desembarque é diasEmbarcado dias após o início
-    const desembarque = new Date(dataEmbarqueInicial);
-    desembarque.setDate(desembarque.getDate() + diasEmbarcado);
-    return desembarque;
-  }
-
-  const diaDoCiclo = totalDias % ciclo;
-
-  let diasAteDesembarque;
-  if (diaDoCiclo < diasEmbarcado) {
-    // Está embarcado: desembarque acontece quando acabam os dias embarcados
-    diasAteDesembarque = diasEmbarcado - diaDoCiclo;
-  } else {
-    // Está desembarcado: próximo desembarque é após o próximo embarque + dias embarcado
-    diasAteDesembarque = ciclo - diaDoCiclo + diasEmbarcado;
-  }
-
-  const proxDesembarque = new Date(hoje);
-  proxDesembarque.setDate(proxDesembarque.getDate() + diasAteDesembarque);
-  return proxDesembarque;
-}
 
 function calcular() {
   const escala = obterEscala();
@@ -173,5 +157,31 @@ function calcular() {
   document.getElementById('dias-para-desembarque').textContent =
     diasParaDesembarque === 0 ? 'Hoje!' : `em ${diasParaDesembarque} dia${diasParaDesembarque !== 1 ? 's' : ''}`;
 
+  // Reordena os cards: o evento mais próximo aparece primeiro
+  const infoGrid = document.querySelector('.info-grid');
+  const cardEmbarque = document.getElementById('proximo-embarque').closest('.info-card');
+  const cardDesembarque = document.getElementById('proximo-desembarque').closest('.info-card');
+
+  if (estaEmbarcado) {
+    infoGrid.prepend(cardDesembarque); // desembarcado vem antes quando está embarcado
+  } else {
+    infoGrid.prepend(cardEmbarque);    // embarque vem antes quando está desembarcado
+  }
+
   document.getElementById('resultado').classList.remove('hidden');
+}
+
+function irParaCalendario(view) {
+  const dataInicio = document.getElementById('data-inicio').value;
+  const escala = obterEscala();
+  if (!dataInicio || !escala) return;
+
+  const params = new URLSearchParams({
+    embarque: dataInicio,
+    embarcado: escala.diasEmbarcado,
+    desembarcado: escala.diasDesembarcado,
+    view: view,
+  });
+
+  window.location.href = `calendario.html?${params.toString()}`;
 }

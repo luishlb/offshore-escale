@@ -1,0 +1,122 @@
+.cal-container {
+  max-width: 900px;
+}
+
+.cal-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cal-page-header h1 {
+  font-size: 1.5rem;
+  color: #38bdf8;
+}
+
+.btn-voltar {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.btn-voltar:hover {
+  color: #e2e8f0;
+}
+
+/* Legenda */
+.legenda {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.legenda-item {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+}
+
+.embarcado-legenda  { background: #164e63; color: #38bdf8; }
+.desembarcado-legenda { background: #14532d; color: #4ade80; }
+.hoje-legenda       { background: #1e293b; color: #e2e8f0; border: 1px solid #38bdf8; }
+
+/* Grade de meses */
+.meses-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.meses-grid.mensal    { grid-template-columns: 1fr; }
+.meses-grid.semestral { grid-template-columns: repeat(2, 1fr); }
+.meses-grid.anual     { grid-template-columns: repeat(3, 1fr); }
+
+/* Bloco de um mês */
+.mes-bloco {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.mes-titulo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.mes-dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.mes-dias-semana span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #475569;
+  padding: 2px 0;
+}
+
+.mes-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.mes-grid .dia {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.mes-grid .dia.embarcado    { background: #164e63; color: #7dd3fc; }
+.mes-grid .dia.desembarcado { background: #14532d; color: #86efac; }
+.mes-grid .dia.hoje         { outline: 2px solid #38bdf8; outline-offset: -2px; font-weight: 800; }
+.mes-grid .dia.vazio        { background: transparent; }
+
+.btn-grupo button.ativo {
+  background: #0c4a6e;
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+/* Responsivo para semestral/anual em telas menores */
+@media (max-width: 600px) {
+  .meses-grid.semestral,
+  .meses-grid.anual {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

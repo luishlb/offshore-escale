@@ -15,18 +15,7 @@
     </header>
 
     <section class="form-section">
-      <div class="field">
-        <label for="escala">Escala de trabalho</label>
-        <select id="escala">
-          <option value="14x14">14x14</option>
-          <option value="14x21">14x21</option>
-          <option value="21x21">21x21</option>
-          <option value="28x28">28x28</option>
-          <option value="custom">Personalizada</option>
-        </select>
-      </div>
-
-      <div class="field custom-fields hidden" id="custom-fields">
+      <div class="field custom-fields" id="custom-fields">
         <div>
           <label for="dias-embarque">Dias embarcado</label>
           <input type="number" id="dias-embarque" min="1" max="365" placeholder="Ex: 14" />
@@ -38,8 +27,23 @@
       </div>
 
       <div class="field">
-        <label for="data-inicio">Data do primeiro embarque</label>
-        <input type="date" id="data-inicio" />
+        <label>Data do primeiro embarque</label>
+        <div class="cal-wrapper">
+          <input type="text" id="data-inicio-display" class="cal-input" placeholder="Selecione uma data" readonly />
+          <input type="hidden" id="data-inicio" />
+          <div class="cal-dropdown hidden" id="cal-dropdown">
+            <div class="cal-header">
+              <button type="button" id="cal-prev">&#8249;</button>
+              <span id="cal-titulo"></span>
+              <button type="button" id="cal-next">&#8250;</button>
+            </div>
+            <div class="cal-dias-semana">
+              <span>Dom</span><span>Seg</span><span>Ter</span>
+              <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+          </div>
+        </div>
       </div>
 
       <button id="btn-calcular" onclick="calcular()">Calcular</button>
@@ -63,9 +67,19 @@
           <span class="info-dias" id="dias-para-desembarque"></span>
         </div>
       </div>
+
+      <div class="ver-calendario">
+        <span class="ver-label">Ver calendário</span>
+        <div class="btn-grupo">
+          <button onclick="irParaCalendario('mensal')">Mensal</button>
+          <button onclick="irParaCalendario('semestral')">Semestral</button>
+          <button onclick="irParaCalendario('anual')">Anual</button>
+        </div>
+      </div>
     </section>
   </div>
 
+  <script src="calculos.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
