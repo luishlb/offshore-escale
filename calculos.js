@@ -10,8 +10,8 @@ function diferencaDias(dataA, dataB) {
 function calcularStatus(dataEmbarqueInicial, diasEmbarcado, diasDesembarcado, dataAlvo) {
   const ciclo = diasEmbarcado + diasDesembarcado;
   const totalDias = diferencaDias(dataEmbarqueInicial, dataAlvo);
-  if (totalDias < 0) return null;
-  const diaDoCiclo = totalDias % ciclo;
+  // Módulo positivo: funciona corretamente com datas anteriores ao embarque inicial
+  const diaDoCiclo = ((totalDias % ciclo) + ciclo) % ciclo;
   return { embarcado: diaDoCiclo < diasEmbarcado, diaDoCiclo };
 }
 
