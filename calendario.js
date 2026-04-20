@@ -148,6 +148,7 @@ async function exportarPDF() {
 
   try {
     const elemento = document.getElementById('cal-view');
+    elemento.classList.add('pdf-export');
     const canvas = await html2canvas(elemento, {
       scale: 2,
       backgroundColor: '#0f172a',
@@ -181,6 +182,7 @@ async function exportarPDF() {
     pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
 
   } finally {
+    document.getElementById('cal-view').classList.remove('pdf-export');
     if (mesGrid && gridOriginal !== null) mesGrid.style.gridTemplateColumns = gridOriginal;
     botoesNav.forEach(b => b.style.visibility = '');
     btn.textContent = '⬇ Exportar PDF';

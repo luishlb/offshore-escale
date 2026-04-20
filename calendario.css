@@ -191,6 +191,14 @@
 .meses-grid.mensal .mes-grid .dia    { font-size: 1.3rem; }
 .meses-grid.semestral .mes-grid .dia { font-size: 1rem; }
 
+/* Tamanhos exclusivos para captura de PDF */
+.pdf-export .meses-grid.mensal .mes-grid .dia,
+.pdf-export .meses-grid.mensal .mes-grid .dia.dia-embarque,
+.pdf-export .meses-grid.mensal .mes-grid .dia.dia-desembarque    { font-size: 2.2rem; }
+.pdf-export .meses-grid.semestral .mes-grid .dia,
+.pdf-export .meses-grid.semestral .mes-grid .dia.dia-embarque,
+.pdf-export .meses-grid.semestral .mes-grid .dia.dia-desembarque { font-size: 1.5rem; }
+
 .mes-grid .dia.embarcado    { background: #7f1d1d; color: #fca5a5; }
 .mes-grid .dia.desembarcado { background: #14532d; color: #86efac; }
 .mes-grid .dia.hoje         { outline: 2px solid #38bdf8; outline-offset: -2px; font-weight: 800; }
