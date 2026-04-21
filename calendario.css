@@ -192,6 +192,65 @@
 .meses-grid.mensal .mes-grid .dia    { font-size: 1.3rem; }
 .meses-grid.semestral .mes-grid .dia { font-size: 1rem; }
 
+/* PDF: tema claro */
+.pdf-export {
+  background: #ffffff !important;
+}
+
+.pdf-export .mes-bloco {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+}
+
+.pdf-export .mes-titulo {
+  color: #1e293b;
+}
+
+.pdf-export .mes-dias-semana span {
+  color: #64748b;
+}
+
+.pdf-export .mes-grid .dia {
+  color: #334155;
+}
+
+.pdf-export .cal-nav span {
+  color: #0369a1;
+}
+
+.pdf-export .cal-nav-nome {
+  color: #475569;
+}
+
+.pdf-export .cal-page-header h1 {
+  color: #0369a1;
+}
+
+.pdf-export .cal-subtitulo {
+  color: #475569;
+}
+
+.pdf-export .copyright {
+  color: #475569;
+}
+
+.pdf-export .header-acoes,
+.pdf-export .btn-voltar {
+  visibility: hidden;
+}
+
+.pdf-export .legenda-item.hoje-legenda {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #38bdf8;
+}
+
+.pdf-export .legenda-item.feriado-legenda {
+  background: #fef9c3;
+  color: #854d0e;
+  border-color: #facc15;
+}
+
 /* Feriados no PDF: fundo sólido em vez de ponto (pseudo-elementos não são confiáveis no html2canvas) */
 .pdf-export .mes-grid .dia.feriado {
   background: #854d0e;

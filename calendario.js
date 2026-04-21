@@ -152,10 +152,10 @@ async function exportarPDF() {
 
   try {
     const elemento = document.querySelector('.cal-container');
-    document.getElementById('cal-view').classList.add('pdf-export');
+    elemento.classList.add('pdf-export');
     const canvas = await html2canvas(elemento, {
       scale: Math.min(1.5, 1.5 / window.devicePixelRatio),
-      backgroundColor: '#0f172a',
+      backgroundColor: '#ffffff',
       logging: false,
       windowWidth: 1024,
     });
@@ -186,7 +186,7 @@ async function exportarPDF() {
     pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
 
   } finally {
-    document.getElementById('cal-view').classList.remove('pdf-export');
+    elemento.classList.remove('pdf-export');
     if (mesGrid && gridOriginal !== null) mesGrid.style.gridTemplateColumns = gridOriginal;
     botoesNav.forEach(b => b.style.visibility = '');
     btn.textContent = '⬇ Exportar PDF';
