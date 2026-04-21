@@ -150,9 +150,10 @@ async function exportarPDF() {
     mesGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
   }
 
+  const elemento = document.querySelector('.cal-container');
   try {
-    const elemento = document.querySelector('.cal-container');
-    elemento.classList.add('pdf-export');
+    elemento.style.background = '#ffffff';
+    document.getElementById('cal-view').classList.add('pdf-export');
     const canvas = await html2canvas(elemento, {
       scale: Math.min(1.5, 1.5 / window.devicePixelRatio),
       backgroundColor: '#ffffff',
@@ -186,7 +187,8 @@ async function exportarPDF() {
     pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
 
   } finally {
-    elemento.classList.remove('pdf-export');
+    document.getElementById('cal-view').classList.remove('pdf-export');
+    elemento.style.background = '';
     if (mesGrid && gridOriginal !== null) mesGrid.style.gridTemplateColumns = gridOriginal;
     botoesNav.forEach(b => b.style.visibility = '');
     btn.textContent = '⬇ Exportar PDF';
