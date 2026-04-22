@@ -29,23 +29,39 @@ function consultarData() {
     const [a, m, d] = p.dataInicio.split('-').map(Number);
     const dataInicio = new Date(a, m - 1, d);
     const status = calcularStatus(dataInicio, p.diasEmbarcado, p.diasDesembarcado, dataAlvo);
-    (status.embarcado ? embarcados : desembarcados).push(p.nome);
+    const ciclo = p.diasEmbarcado + p.diasDesembarcado;
+    const preEmbarque = !status.embarcado && status.diaDoCiclo === ciclo - 1;
+    if (status.embarcado) {
+      embarcados.push(p.nome);
+    } else {
+      desembarcados.push({ nome: p.nome, preEmbarque });
+    }
   });
 
-  const nomes = lista =>
+  const nomesEmbarcados = lista =>
     lista.length
       ? lista.map(n => `<span class="consulta-nome">${n}</span>`).join('')
       : '<span class="consulta-vazio">Nenhum</span>';
+
+  const nomesDesembarcados = lista =>
+    lista.length
+      ? lista.map(({ nome, preEmbarque }) =>
+          `<span class="consulta-nome">${nome}${preEmbarque ? '<sup>*</sup>' : ''}</span>`
+        ).join('')
+      : '<span class="consulta-vazio">Nenhum</span>';
+
+  const temPreEmbarque = desembarcados.some(d => d.preEmbarque);
 
   document.getElementById('resultado-consulta').innerHTML = `
     <div class="consulta-resultado">
       <div class="consulta-grupo embarcados">
         <span class="consulta-grupo-titulo">Embarcados</span>
-        ${nomes(embarcados)}
+        ${nomesEmbarcados(embarcados)}
       </div>
       <div class="consulta-grupo desembarcados">
         <span class="consulta-grupo-titulo">Desembarcados</span>
-        ${nomes(desembarcados)}
+        ${nomesDesembarcados(desembarcados)}
+        ${temPreEmbarque ? '<p class="consulta-pre-embarque">*Dia de pré-embarque</p>' : ''}
       </div>
     </div>`;
 }

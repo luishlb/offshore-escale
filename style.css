@@ -489,6 +489,15 @@ header .subtitle {
   font-style: italic;
 }
 
+.consulta-pre-embarque {
+  margin: 8px 0 0 0;
+  font-size: 0.75rem;
+  color: #86efac;
+  font-style: italic;
+  opacity: 0.8;
+  width: 100%;
+}
+
 .copyright {
   text-align: center;
   color: #e2e8f0;
