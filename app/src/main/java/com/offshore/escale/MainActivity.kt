@@ -44,10 +44,12 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("https://appassets.androidview.static/assets/www/index.html")
     }
 
+    @Suppress("MustBeInvokedByOverriders")
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()
         } else {
+            @Suppress("DEPRECATION")
             super.onBackPressed()
         }
     }
