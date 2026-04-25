@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(webView)
 
         val assetLoader = WebViewAssetLoader.Builder()
+            .setDomain("appassets.androidview.static")
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
             .build()
 
