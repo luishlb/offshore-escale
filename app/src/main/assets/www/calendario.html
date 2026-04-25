@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendário — Offshore Scale</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="calendario.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+</head>
+<body>
+
+  <div class="modal-overlay hidden" id="modal-feriado">
+    <div class="modal">
+      <h2>Feriado</h2>
+      <p id="modal-feriado-nome"></p>
+      <div class="modal-acoes">
+        <button class="modal-btn-salvar" onclick="document.getElementById('modal-feriado').classList.add('hidden')">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container cal-container">
+    <header class="cal-page-header">
+      <a href="index.html" class="btn-voltar">&#8592; Voltar</a>
+      <div class="cal-titulo-bloco">
+        <h1>Offshore Scale</h1>
+        <p class="cal-subtitulo hidden" id="cal-subtitulo"></p>
+      </div>
+      <div class="header-acoes">
+      <button class="btn-exportar" onclick="exportarPDF()">&#8681; Exportar PDF</button>
+      <div class="btn-grupo">
+        <button id="btn-mensal"    onclick="trocarView('mensal')">Mensal</button>
+        <button id="btn-semestral" onclick="trocarView('semestral')">Semestral</button>
+        <button id="btn-anual"     onclick="trocarView('anual')">Anual</button>
+      </div>
+      </div>
+    </header>
+
+    <div class="legenda">
+      <span class="legenda-item embarcado-legenda">Embarcado</span>
+      <span class="legenda-item desembarcado-legenda">Desembarcado</span>
+      <span class="legenda-item embarque-legenda">Dia de embarque</span>
+      <span class="legenda-item desembarque-legenda">Dia de desembarque</span>
+      <span class="legenda-item hoje-legenda">Hoje</span>
+      <span class="legenda-item feriado-legenda">Feriado</span>
+    </div>
+
+    <div id="cal-view"></div>
+
+    <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="calculos.js"></script>
+  <script src="calendario.js"></script>
+</body>
+</html>

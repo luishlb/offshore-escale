@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offshore Scale</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+</head>
+<body>
+
+  <!-- Modal de consulta por data -->
+  <div class="modal-overlay hidden" id="modal-consulta">
+    <div class="modal modal-consulta">
+      <h2>Consultar data específica</h2>
+      <p>Veja o status de todos os perfis em uma data.</p>
+      <div class="cal-wrapper">
+        <input type="text" id="data-consulta-display" class="cal-input" placeholder="Selecione uma data" readonly />
+        <input type="hidden" id="data-consulta" />
+        <div class="cal-dropdown hidden" id="cal-consulta-dropdown">
+          <div class="cal-header">
+            <button type="button" id="cal-consulta-prev">&#8249;</button>
+            <span id="cal-consulta-titulo"></span>
+            <button type="button" id="cal-consulta-next">&#8250;</button>
+          </div>
+          <div class="cal-dias-semana">
+            <span>Dom</span><span>Seg</span><span>Ter</span>
+            <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+          </div>
+          <div class="cal-grid" id="cal-consulta-grid"></div>
+        </div>
+      </div>
+      <div id="resultado-consulta"></div>
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="fecharModalConsulta()">Fechar</button>
+        <button class="modal-btn-salvar" onclick="consultarData()">Consultar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação de perfil -->
+  <div class="modal-overlay hidden" id="modal-confirmar-perfil">
+    <div class="modal">
+      <h2>Salvar perfil?</h2>
+      <p>Deseja cadastrar um perfil antes de consultar? Assim você não precisa preencher tudo de novo depois.</p>
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="responderSalvarPerfil(false)">Não, continuar</button>
+        <button class="modal-btn-salvar" onclick="responderSalvarPerfil(true)">Sim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de perfil -->
+  <div class="modal-overlay hidden" id="modal-perfil">
+    <div class="modal">
+      <h2>Salvar perfil</h2>
+      <p>Informe seu nome para salvar a escala atual.</p>
+      <input type="text" id="input-nome" placeholder="Seu nome" maxlength="40" />
+      <div class="modal-acoes">
+        <button class="modal-btn-cancelar" onclick="fecharModalPerfil()">Cancelar</button>
+        <button class="modal-btn-salvar" onclick="confirmarSalvarPerfil()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>Offshore Scale</h1>
+      <p class="subtitle">Calcule sua escala de trabalho offshore</p>
+    </header>
+
+    <div class="perfis-section hidden" id="perfis-section">
+      <span class="ver-label">Perfil ativo</span>
+      <div class="perfis-dropdown-row">
+        <select id="perfis-select" onchange="selecionarPerfilDropdown()"></select>
+        <button class="btn-apagar-perfil" onclick="deletarPerfilAtivo()">Apagar</button>
+      </div>
+    </div>
+
+    <section class="form-section">
+      <div class="field custom-fields" id="custom-fields">
+        <div>
+          <label for="dias-embarque">Embarcado</label>
+          <input type="number" id="dias-embarque" min="1" max="365" placeholder="Ex: 14" />
+        </div>
+        <div>
+          <label for="dias-desembarque">Desembarcado</label>
+          <input type="number" id="dias-desembarque" min="1" max="365" placeholder="Ex: 21" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Data do primeiro embarque</label>
+        <div class="cal-wrapper">
+          <input type="text" id="data-inicio-display" class="cal-input" placeholder="Selecione uma data" readonly />
+          <input type="hidden" id="data-inicio" />
+          <div class="cal-dropdown hidden" id="cal-dropdown">
+            <div class="cal-header">
+              <button type="button" id="cal-prev">&#8249;</button>
+              <span id="cal-titulo"></span>
+              <button type="button" id="cal-next">&#8250;</button>
+            </div>
+            <div class="cal-dias-semana">
+              <span>Dom</span><span>Seg</span><span>Ter</span>
+              <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-calcular" onclick="calcular()">Calcular</button>
+      <button id="btn-salvar-perfil" class="btn-perfil" onclick="clicarSalvarPerfil()">Salvar perfil</button>
+      <button id="btn-novo-perfil" class="btn-perfil hidden" onclick="abrirModalPerfil()">Salvar outro perfil</button>
+    </section>
+
+    <button class="btn-consulta hidden" id="btn-consulta" onclick="abrirModalConsulta()">Consultar data específica</button>
+
+    <section class="resultado hidden" id="resultado">
+      <div class="status-card" id="status-card">
+        <span class="status-label">Status hoje</span>
+        <span class="status-value" id="status-hoje"></span>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-label">Próximo embarque</span>
+          <span class="info-date" id="proximo-embarque"></span>
+          <span class="info-dias" id="dias-para-embarque"></span>
+        </div>
+        <div class="info-card">
+          <span class="info-label">Próximo desembarque</span>
+          <span class="info-date" id="proximo-desembarque"></span>
+          <span class="info-dias" id="dias-para-desembarque"></span>
+        </div>
+      </div>
+
+      <div class="ver-calendario">
+        <span class="ver-label">Ver calendário</span>
+        <div class="btn-grupo">
+          <button onclick="irParaCalendario('mensal')">Mensal</button>
+          <button onclick="irParaCalendario('semestral')">Semestral</button>
+          <button onclick="irParaCalendario('anual')">Anual</button>
+        </div>
+      </div>
+    </section>
+
+    <a href="https://certificados-maritimos-sigma.vercel.app/" target="_blank" rel="noopener noreferrer" class="app-link">
+      <div>
+        <p class="app-link-label">Outros aplicativos</p>
+        <span class="app-link-title">Maritime Certificates</span>
+        <span class="app-link-desc">Gerencie seus certificados marítimos</span>
+      </div>
+      <svg class="app-link-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+      </svg>
+    </a>
+
+    <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
+  </div>
+
+  <div id="update-banner" class="update-banner hidden">
+    <span>Nova versão disponível</span>
+    <button id="btn-atualizar">Atualizar</button>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      // No app Android nativo com assets locais, Service Worker pode não ser necessário ou comportar-se diferente.
+      // Mas manteremos para compatibilidade se rodar via URL.
+    }
+  </script>
+  <script src="calculos.js"></script>
+  <script src="cal-embarque.js"></script>
+  <script src="cal-consulta.js"></script>
+  <script src="calculo.js"></script>
+  <script src="perfis.js"></script>
+  <script src="consulta.js"></script>
+</body>
+</html>

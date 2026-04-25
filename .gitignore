@@ -1,0 +1,15 @@
+# Android build
+build/
+app/build/
+*.apk
+*.aab
+local.properties
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# IDE
+*.iml
+.DS_Store
