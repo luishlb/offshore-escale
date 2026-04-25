@@ -32,6 +32,14 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // HTML sempre da rede (fallback cache se offline)
+  if (e.request.headers.get('accept')?.includes('text/html')) {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+  // Assets (CSS, JS, imagens) cache-first
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
