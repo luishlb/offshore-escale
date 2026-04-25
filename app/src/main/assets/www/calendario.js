@@ -184,7 +184,13 @@ async function exportarPDF() {
 
     const periodo = calcularPeriodo(viewAtual);
     const prefixo = nomeParam ? `${nomeParam} - ` : '';
-    pdf.save(`offshore-scale-${prefixo}${periodo.titulo}.pdf`);
+    const fileName = `offshore-scale-${prefixo}${periodo.titulo}.pdf`;
+    if (window.Android) {
+      const base64 = pdf.output('datauristring').split(',')[1];
+      window.Android.savePdf(base64, fileName);
+    } else {
+      pdf.save(fileName);
+    }
 
   } finally {
     document.getElementById('cal-view').classList.remove('pdf-export');
