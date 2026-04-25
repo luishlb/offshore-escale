@@ -1,4 +1,4 @@
-const CACHE = 'offshore-scale-v1';
+const CACHE = 'offshore-scale-v2';
 
 const ARQUIVOS = [
   '/',
@@ -35,4 +35,8 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
+});
+
+self.addEventListener('message', e => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
 });

@@ -160,9 +160,41 @@
     <footer class="copyright">© 2026 Luis H. L. Barreto</footer>
   </div>
 
+  <div id="update-banner" class="update-banner hidden">
+    <span>Nova versão disponível</span>
+    <button id="btn-atualizar">Atualizar</button>
+  </div>
+
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      var swAtual = null;
+
+      navigator.serviceWorker.register('/sw.js').then(function(reg) {
+        if (reg.waiting) {
+          mostrarBanner(reg.waiting);
+          return;
+        }
+        reg.addEventListener('updatefound', function() {
+          var novo = reg.installing;
+          novo.addEventListener('statechange', function() {
+            if (novo.state === 'installed' && navigator.serviceWorker.controller) {
+              mostrarBanner(novo);
+            }
+          });
+        });
+      });
+
+      navigator.serviceWorker.addEventListener('controllerchange', function() {
+        window.location.reload();
+      });
+
+      function mostrarBanner(sw) {
+        swAtual = sw;
+        document.getElementById('update-banner').classList.remove('hidden');
+        document.getElementById('btn-atualizar').addEventListener('click', function() {
+          swAtual.postMessage('SKIP_WAITING');
+        });
+      }
     }
   </script>
   <script src="calculos.js"></script>
