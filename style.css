@@ -498,6 +498,57 @@ header .subtitle {
   width: 100%;
 }
 
+.app-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 24px;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.app-link:hover {
+  background: #263348;
+  border-color: #38bdf8;
+}
+
+.app-link-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.app-link-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  display: block;
+}
+
+.app-link-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  display: block;
+  margin-top: 2px;
+}
+
+.app-link-icon {
+  color: #475569;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.app-link:hover .app-link-icon {
+  color: #38bdf8;
+}
+
 .copyright {
   text-align: center;
   color: #e2e8f0;
