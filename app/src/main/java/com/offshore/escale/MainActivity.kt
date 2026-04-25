@@ -1,18 +1,15 @@
 package com.offshore.escale
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Base64
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.webkit.WebViewAssetLoader
 import java.io.File
 
@@ -22,34 +19,18 @@ class MainActivity : AppCompatActivity() {
 
     inner class AndroidBridge {
         @JavascriptInterface
-        fun savePdf(base64Data: String, fileName: String) {
+        fun sharePdf(base64Data: String, fileName: String) {
             val pdfBytes = Base64.decode(base64Data, Base64.DEFAULT)
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    val values = ContentValues().apply {
-                        put(MediaStore.Downloads.DISPLAY_NAME, fileName)
-                        put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
-                        put(MediaStore.Downloads.IS_PENDING, 1)
-                    }
-                    val resolver = contentResolver
-                    val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
-                    uri?.let {
-                        resolver.openOutputStream(it)?.use { stream -> stream.write(pdfBytes) }
-                        values.clear()
-                        values.put(MediaStore.Downloads.IS_PENDING, 0)
-                        resolver.update(it, values, null, null)
-                    }
-                } else {
-                    val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                    File(dir, fileName).writeBytes(pdfBytes)
-                }
-                runOnUiThread {
-                    Toast.makeText(this@MainActivity, "PDF salvo em Downloads/$fileName", Toast.LENGTH_LONG).show()
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(this@MainActivity, "Erro ao salvar PDF: ${e.message}", Toast.LENGTH_LONG).show()
-                }
+            val file = File(cacheDir, fileName)
+            file.writeBytes(pdfBytes)
+            val uri = FileProvider.getUriForFile(this@MainActivity, "${packageName}.provider", file)
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "application/pdf"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            runOnUiThread {
+                startActivity(Intent.createChooser(intent, "Compartilhar PDF"))
             }
         }
     }

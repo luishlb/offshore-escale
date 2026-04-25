@@ -187,7 +187,7 @@ async function exportarPDF() {
     const fileName = `offshore-scale-${prefixo}${periodo.titulo}.pdf`;
     if (window.Android) {
       const base64 = pdf.output('datauristring').split(',')[1];
-      window.Android.savePdf(base64, fileName);
+      window.Android.sharePdf(base64, fileName);
     } else {
       pdf.save(fileName);
     }
